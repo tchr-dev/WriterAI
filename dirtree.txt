@@ -1,0 +1,15 @@
+[1;36m.[0m
+├── README.md
+├── app.py
+├── [1;36mcore[0m
+│   ├── llm_handler.py
+│   ├── [1;36mmemory[0m
+│   └── [1;36mprompts[0m
+├── dirtree.txt
+├── [31minit_and_push.sh[0m
+├── requirements.txt
+└── [1;36mutils[0m
+    ├── exporter.py
+    └── style_checker.py
+
+5 directories, 8 files
