@@ -1,0 +1,49 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# VS Code settings
+.vscode/
+
+# Streamlit
+.streamlit/config.toml
+.streamlit/secrets.toml
+
+# LangChain / logging
+*.jsonl
+logs/
+logs/*.log
+langchain.yaml
+
+# Environment variables
+.env
+.env.*
+
+# Python cache
+*.pyo
+*.pyd
+*.pdb
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# macOS / Linux / Windows system files
+.DS_Store
+Thumbs.db
+
+# Models / local LLM cache (Ollama, etc)
+models/
+ollama/
+*.bin
+*.gguf
+
+# Misc
+*.log
+*.sqlite3
+db.sqlite3
