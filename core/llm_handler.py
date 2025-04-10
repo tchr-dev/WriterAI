@@ -5,6 +5,9 @@ from typing import Optional
 from langchain_ollama import ChatOllama
 from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
 from langchain_core.language_models.chat_models import BaseChatModel
+# Новые импорты:
+from logger.log_writer import log_interaction
+from core.memory.context_buffer import ContextBuffer
 
 
 class LLMHandler:
@@ -18,6 +21,9 @@ class LLMHandler:
         self.temperature = temperature
         self.template_path = Path(template_path)
         self.llm: BaseChatModel = self._get_llm()
+
+        # Контекст
+        self.context = ContextBuffer(max_messages=5)
 
     def _get_llm(self) -> BaseChatModel:
         if self.model_name.startswith("ollama:"):
@@ -34,12 +40,29 @@ class LLMHandler:
             return {}
 
     def generate(self, prompt: str, system_prompt: Optional[str] = None) -> str:
+        # Собираем сообщения с учётом контекста
         messages = []
         if system_prompt:
             messages.append(SystemMessage(content=system_prompt))
+
+        for m in self.context.buffer:
+            if m["role"] == "user":
+                messages.append(HumanMessage(content=m["content"]))
+            elif m["role"] == "assistant":
+                messages.append(AIMessage(content=m["content"]))
+
         messages.append(HumanMessage(content=prompt))
 
+        # Генерация
         response = self.llm.invoke(messages)
+
+        # Обновляем контекст
+        self.context.add("user", prompt)
+        self.context.add("assistant", response.content)
+
+        # Логируем
+        log_interaction(prompt="\n".join([m.content for m in messages]), response=response.content)
+
         return response.content
 
     def generate_from_template(self, user_prompt: str) -> str:
@@ -53,7 +76,23 @@ class LLMHandler:
             messages.append(HumanMessage(content=ex.get("user", "")))
             messages.append(AIMessage(content=ex.get("assistant", "")))
 
+        # Контекст из предыдущих сообщений
+        for m in self.context.buffer:
+            if m["role"] == "user":
+                messages.append(HumanMessage(content=m["content"]))
+            elif m["role"] == "assistant":
+                messages.append(AIMessage(content=m["content"]))
+
         messages.append(HumanMessage(content=user_prompt))
 
+        # Генерация
         response = self.llm.invoke(messages)
+
+        # Обновляем контекст
+        self.context.add("user", user_prompt)
+        self.context.add("assistant", response.content)
+
+        # Логируем
+        log_interaction(prompt="\n".join([m.content for m in messages]), response=response.content)
+
         return response.content
