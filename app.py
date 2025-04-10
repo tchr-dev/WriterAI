@@ -3,7 +3,7 @@ import logging
 from core.llm_handler import LLMHandler
 from core.prompts.prompt_editor import prompt_editor_ui
 from utils.config import load_config, save_config
-from logger.log_writer import load_logs
+from logger.log_writer import list_log_files, load_logs_from_file
 
 st.set_page_config(page_title="NovelCraft MVP", layout="wide")
 
@@ -78,12 +78,21 @@ def generation_ui():
 
 def history_ui():
     st.title("📜 История запросов")
-    logs = load_logs()
-    for entry in reversed(logs):
-        with st.expander(f"{entry.get('timestamp', 'нет времени')} | {entry.get('model_name', 'модель?')}"):
-            st.markdown(f"**Prompt:**\n```text\n{entry.get('prompt', '')}```")
-            st.markdown(
-                f"**Response:**\n```text\n{entry.get('response', '')}```")
+
+    log_files = list_log_files()
+    if log_files:
+        selected_log = st.selectbox(
+            "Выберите файл лога", log_files, index=len(log_files)-1)
+        logs = load_logs_from_file(selected_log)
+
+        for entry in reversed(logs):
+            with st.expander(f"{entry.get('timestamp', 'нет времени')} | {entry.get('model_name', 'модель?')}"):
+                st.markdown(
+                    f"**Prompt:**\n```text\n{entry.get('prompt', '')}```")
+                st.markdown(
+                    f"**Response:**\n```text\n{entry.get('response', '')}```")
+    else:
+        st.info("Файлы логов не найдены.")
 
 
 def main():

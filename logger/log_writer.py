@@ -21,14 +21,20 @@ def log_interaction(prompt: str, response: str, meta: dict = None):
         f.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
 
-def load_logs(path: str = "logs/2025-04-10.jsonl", limit: int = 20) -> list[dict]:
+def list_log_files(log_dir: str = "logs") -> list[str]:
+    return sorted([str(p.name) for p in Path(log_dir).glob("*.jsonl")])
+
+
+def load_logs_from_file(filename: str, log_dir: str = "logs", limit: int = 50) -> list[dict]:
+    path = Path(log_dir) / filename
     entries = []
-    p = Path(path)
-    if p.exists():
-        with open(p, "r", encoding="utf-8") as f:
+
+    if path.exists():
+        with open(path, "r", encoding="utf-8") as f:
             for line in f:
                 try:
                     entries.append(json.loads(line))
                 except json.JSONDecodeError:
                     continue
+
     return entries[-limit:]
