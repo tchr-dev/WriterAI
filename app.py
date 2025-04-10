@@ -3,6 +3,7 @@ import logging
 from core.llm_handler import LLMHandler
 from core.prompts.prompt_editor import prompt_editor_ui
 from utils.config import load_config, save_config
+from logger.log_writer import load_logs
 
 st.set_page_config(page_title="NovelCraft MVP", layout="wide")
 
@@ -13,9 +14,11 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
 )
 
+
 def log_interaction(prompt: str, response: str):
     logging.info("Prompt: %s", prompt)
     logging.info("Response: %s", response)
+
 
 def generation_ui():
     st.title("🕋️ NovelCraft: Генерация текста")
@@ -31,8 +34,10 @@ def generation_ui():
 
     # Боковая панель с настройками
     st.sidebar.header("⚙️ Настройки")
-    model_choice = st.sidebar.selectbox("Модель", ["llama3", "mistral"], index=["llama3", "mistral"].index(default_model))
-    temperature = st.sidebar.slider("Креативность", 0.1, 1.0, float(default_temp))
+    model_choice = st.sidebar.selectbox("Модель", ["llama3", "mistral"], index=[
+                                        "llama3", "mistral"].index(default_model))
+    temperature = st.sidebar.slider(
+        "Креативность", 0.1, 1.0, float(default_temp))
 
     if st.sidebar.button("🔖 Сохранить настройки"):
         save_config({"model": model_choice, "temperature": temperature})
@@ -70,16 +75,30 @@ def generation_ui():
             st.markdown(f"**Ответ:** {item['output']}")
             st.markdown("---")
 
+
+def history_ui():
+    st.title("📜 История запросов")
+    logs = load_logs()
+    for entry in reversed(logs):
+        with st.expander(f"{entry.get('timestamp', 'нет времени')} | {entry.get('model_name', 'модель?')}"):
+            st.markdown(f"**Prompt:**\n```text\n{entry.get('prompt', '')}```")
+            st.markdown(
+                f"**Response:**\n```text\n{entry.get('response', '')}```")
+
+
 def main():
     # Навигация
     page = st.sidebar.selectbox("📚 Навигация", [
-        "Генерация текста", "🧠 Prompt Editor"
+        "Генерация текста", "🧠 Prompt Editor",  "📜 История"
     ])
 
     if page == "Генерация текста":
         generation_ui()
     elif page == "🧠 Prompt Editor":
         prompt_editor_ui()
+    elif page == "📜 История":
+        history_ui()
+
 
 if __name__ == "__main__":
     main()
