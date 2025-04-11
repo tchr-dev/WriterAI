@@ -103,3 +103,9 @@ What secrets will Sophia uncover? Will she survive the encounter with The Red Ha
 Her signature was a small red hatpin stuck into the flesh of each victim, a gruesome calling card that left investigators baffled. The police department had a special task force dedicated to catching Red Hat, but all their efforts seemed futile. She always stayed one step ahead, leaving behind only cryptic messages and half-baked clues.
 
 Detective Alexei Voronov was summoned to the latest crime scene, where he found himself face-to-face with the eerie presence of Red Hat. He knew that this case would be his toughest challenge yet, but something about her intrigued him...
+2025-04-10 21:44:27,507 [INFO] Loading faiss.
+2025-04-10 21:44:27,986 [INFO] Successfully loaded faiss.
+2025-04-10 21:44:27,991 [INFO] Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes.
+2025-04-10 21:52:24,642 [INFO] Loading faiss.
+2025-04-10 21:52:24,666 [INFO] Successfully loaded faiss.
+2025-04-10 21:52:24,670 [INFO] Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes.

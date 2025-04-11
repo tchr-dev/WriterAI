@@ -47,3 +47,11 @@ ollama/
 *.log
 *.sqlite3
 db.sqlite3
+dirtree.txt
+*.zip
+*.tar.gz
+
+# Shell commands
+*.sh
+*.bash
+*.zsh

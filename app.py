@@ -2,6 +2,7 @@ import streamlit as st
 import logging
 from core.llm_handler import LLMHandler
 from core.prompts.prompt_editor import prompt_editor_ui
+from core.lore.lore_editor import lore_editor_ui
 from utils.config import load_config, save_config
 from logger.log_writer import list_log_files, load_logs_from_file
 
@@ -52,7 +53,8 @@ def generation_ui():
             with st.spinner("ИИ думает..."):
                 handler = LLMHandler(
                     model_name=f"ollama:{model_choice}",
-                    temperature=temperature
+                    temperature=temperature,
+                    use_memory=True  # Включаем контекстную память
                 )
 
                 generated_text = handler.generate_from_template(user_text)
@@ -66,6 +68,20 @@ def generation_ui():
                 })
 
                 log_interaction(user_text, generated_text)
+
+                # Отображаем память
+                with st.expander("🧠 Контекст памяти"):
+                    memory = handler.get_context_data()
+
+                    st.subheader("📘 Сводка сюжета")
+                    st.json(memory["summary"])
+
+                    st.subheader("👤 Персонажи")
+                    st.json(memory["characters"])
+
+                    st.subheader("🌍 Лор / Магические правила")
+                    for item in memory["lore"]:
+                        st.markdown(f"- {item}")
         else:
             st.warning("Введите текст перед генерацией!")
 
@@ -98,7 +114,7 @@ def history_ui():
 def main():
     # Навигация
     page = st.sidebar.selectbox("📚 Навигация", [
-        "Генерация текста", "🧠 Prompt Editor",  "📜 История"
+        "Генерация текста", "🧠 Prompt Editor", "📜 История", "🌍 Редактор Лора"
     ])
 
     if page == "Генерация текста":
@@ -107,6 +123,8 @@ def main():
         prompt_editor_ui()
     elif page == "📜 История":
         history_ui()
+    elif page == "🌍 Редактор Лора":
+        lore_editor_ui()
 
 
 if __name__ == "__main__":
