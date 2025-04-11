@@ -109,3 +109,30 @@ Detective Alexei Voronov was summoned to the latest crime scene, where he found 
 2025-04-10 21:52:24,642 [INFO] Loading faiss.
 2025-04-10 21:52:24,666 [INFO] Successfully loaded faiss.
 2025-04-10 21:52:24,670 [INFO] Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes.
+2025-04-11 09:15:05,872 [INFO] HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+2025-04-11 09:15:20,441 [INFO] HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+2025-04-11 09:15:21,238 [INFO] HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+2025-04-11 09:15:45,297 [INFO] HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+2025-04-11 09:16:03,629 [INFO] HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+2025-04-11 09:16:23,720 [INFO] HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+2025-04-11 09:16:25,492 [INFO] HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+2025-04-11 09:17:05,599 [INFO] HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+2025-04-11 09:17:05,892 [INFO] HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+2025-04-11 09:17:18,173 [INFO] HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
+2025-04-11 09:17:18,654 [INFO] Prompt: Волк съел волшебное зелье
+2025-04-11 09:17:18,654 [INFO] Response: What an intriguing development! Here's my continuation of the story:
+
+As the moon hung low in the sky, Kaelin, a young wolf, wandered through the forest, his senses heightened by the whispers of the ancient magic that lingered in every tree. He had always been drawn to the mysterious energy that pulsed through these woods, and tonight was no exception.
+
+Suddenly, his nose twitched as he caught wind of something peculiar - a faint aroma of enchanted herbs wafting from a nearby clearing. Kaelin's curiosity got the better of him, and he padded silently towards the source of the scent.
+
+As he entered the clearing, he spotted a small pouch lying open on the ground, surrounded by a halo of soft blue light. The contents spilled out, releasing a pungent aroma that made his ears perk up. A tiny vial of glowing liquid lay at the center of the mess, its surface etched with ancient runes.
+
+Without hesitation, Kaelin's tongue darted out to taste the potion. He had always been fascinated by magic, and this strange concoction seemed like a treasure trove of possibilities. As he licked the liquid from his paw, a sudden surge of power coursed through him - his senses grew sharper, his strength increased, and his mind became clearer than ever before.
+
+But as the effects of the potion took hold, Kaelin began to feel an unsettling sense of unease. The ancient runes on the vial seemed to be shifting, their meanings blurring like mist in the morning sun. He felt a strange connection to the forest, as if the very essence of the land was now coursing through his veins.
+
+As the moon dipped below the treetops, Kaelin realized that he had become something more - a vessel for the magic that lay hidden beneath the surface of the world. The runes on the vial seemed to be speaking to him, their secrets whispering in his ear like the wind through the leaves...
+
+How's this continuation?
+2025-04-11 09:17:20,271 [INFO] HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"

@@ -11,6 +11,37 @@ from langchain.memory import (
 from langchain.vectorstores import FAISS
 from langchain.embeddings import OllamaEmbeddings
 from langchain.llms.base import BaseLLM
+from langchain_core.memory import BaseMemory
+from pydantic import Field
+
+
+class FlattenedMemory(BaseMemory):
+    memory: CombinedMemory = Field(exclude=True)
+
+    def __init__(self, memory: CombinedMemory):
+        super().__init__(memory=memory)
+
+    def load_memory_variables(self, inputs: dict) -> dict:
+        raw = self.memory.load_memory_variables(inputs)
+        flat = {}
+        for key, value in raw.items():
+            if isinstance(value, dict):
+                flat[key] = "\n".join(str(v) for v in value.values())
+            elif isinstance(value, list):
+                flat[key] = "\n".join(str(v) for v in value)
+            else:
+                flat[key] = str(value)
+        return flat
+
+    def save_context(self, inputs: dict, outputs: dict) -> None:
+        return self.memory.save_context(inputs, outputs)
+
+    def clear(self) -> None:
+        return self.memory.clear()
+
+    @property
+    def memory_variables(self) -> list:
+        return ["summary", "entities", "lore"]
 
 
 class MemoryManager:
@@ -42,7 +73,6 @@ class MemoryManager:
                 self.character_memory,
                 self.lore_memory
             ],
-            # удаляем потенциально конфликтный ключ
             exclude_input_keys=["history"]
         )
 
@@ -50,7 +80,7 @@ class MemoryManager:
         return ConversationSummaryBufferMemory(
             llm=self.llm,
             memory_key="summary",
-            input_key="input",       # Явное указание input_key
+            input_key="input",
             return_messages=True
         )
 
@@ -58,7 +88,7 @@ class MemoryManager:
         return ConversationEntityMemory(
             llm=self.llm,
             memory_key="entities",
-            input_key="input",       # Явное указание input_key
+            input_key="input",
             return_messages=True
         )
 
@@ -99,11 +129,12 @@ class MemoryManager:
                 yaml.safe_dump(new_lore, f, allow_unicode=True)
 
     def get_combined_memory(self):
-        return self.combined_memory
+        return FlattenedMemory(self.combined_memory)
 
     def get_memory_summary(self):
+        dummy_input = {"input": ""}
         return {
-            "summary": self.summary_memory.load_memory_variables({}),
-            "characters": self.character_memory.load_memory_variables({}),
+            "summary": self.summary_memory.load_memory_variables(dummy_input),
+            "characters": self.character_memory.load_memory_variables(dummy_input),
             "lore": self.lore_texts
         }
