@@ -1,0 +1,32 @@
+{
+  "title": "test2",
+  "chapters": [
+    {
+      "title": "1",
+      "scenes": []
+    },
+    {
+      "title": "2",
+      "scenes": [
+        {
+          "title": "\u0412\u0438\u0437\u0438\u0442 \u0432 \u043e\u0444\u0438\u0441",
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "3",
+      "scenes": [
+        {
+          "title": "\u044b\u0432\u0430\u044b\u0432\u0430\u044b\u0432",
+          "content": ""
+        },
+        {
+          "title": "\u0441\u0447\u043c\u0447\u0441\u043c\u0447\u0441",
+          "content": ""
+        }
+      ]
+    }
+  ],
+  "characters": []
+}
