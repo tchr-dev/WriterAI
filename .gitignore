@@ -56,3 +56,7 @@ dirtree.txt
 *.sh
 *.bash
 *.zsh
+
+# Project files
+projects/
+projects/*.json
