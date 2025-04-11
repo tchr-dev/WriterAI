@@ -4,6 +4,7 @@ from pathlib import Path
 
 PROMPT_FILE = Path("core/prompts/base.json")
 
+
 def prompt_editor_ui():
     st.header("🧠 Prompt Editor")
 
@@ -20,7 +21,20 @@ def prompt_editor_ui():
     if st.button("💾 Сохранить"):
         try:
             parsed = json.loads(editor)  # Валидация
-            PROMPT_FILE.write_text(json.dumps(parsed, indent=2, ensure_ascii=False))
+            PROMPT_FILE.write_text(json.dumps(
+                parsed, indent=2, ensure_ascii=False))
             st.success("✅ Шаблон сохранён!")
         except json.JSONDecodeError as e:
             st.error(f"❌ Ошибка в JSON: {str(e)}")
+
+
+def load_prompt(path: str) -> str:
+    """
+    Загружает system-промпт из JSON-файла.
+    """
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            return data.get("system", "")
+    except (json.JSONDecodeError, FileNotFoundError):
+        return ""

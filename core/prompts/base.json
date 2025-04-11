@@ -1,9 +1,9 @@
 {
-  "input_variables": [
-    "summary",
-    "entities",
-    "lore",
-    "input"
-  ],
-  "template": "Ты литературный помощник. Помогай автору с генерацией художественных текстов.\n\nКонтекст:\nСводка: {summary}\nСущности: {entities}\nЛор: {lore}\n\nЗапрос:\n{input}"
+  "system": "Ты помощник писателя...",
+  "examples": [
+    {
+      "user": "Пример вопроса",
+      "assistant": "Пример ответа"
+    }
+  ]
 }

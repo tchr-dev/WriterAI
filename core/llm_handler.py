@@ -7,6 +7,7 @@ from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain.chains import ConversationChain
 from langchain.prompts import PromptTemplate
+from core.prompts.prompt_editor import load_prompt
 
 from logger.log_writer import log_interaction
 from core.memory.context_buffer import ContextBuffer
@@ -122,7 +123,7 @@ class LLMHandler:
             log_interaction(prompt=user_prompt, response=response)
             return response
 
-        template = self._load_prompt_template()
+        template = json.loads(load_prompt(str(self.template_path)))
         messages = []
 
         if "system" in template:
